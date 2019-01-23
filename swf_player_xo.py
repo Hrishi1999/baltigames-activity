@@ -19,24 +19,25 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-import gtk
+import gi
+gi.require_version('Gtk', '3.0')
+gi.require_version('WebKit2', '4.0')
+from gi.repository import Gtk
+from gi.repository import WebKit2
 import pygtk
 pygtk.require("2.0")
 
 import sys
 
 import os
-import hulahop
-from sugar import env
-hulahop.startup(os.path.join(env.get_profile_path(), 'gecko'))
-from hulahop.webview import WebView
+from sugar3 import env
 
 class Navegador():
 	''' Es un Navegador web from hulahop.webview import WebView '''
 	def __init__(self, DIRECTORIO_DATOS):
 		self.directorio = DIRECTORIO_DATOS
 		self.uri = None
-		self.navegador = WebView()
+		self.navegador = WebKit2.WebView()
 	
 	def get_Navegador(self):
 	# Establece la dirección por defecto, y devuelve el navegador para ser incrustado en un contenedor gtk

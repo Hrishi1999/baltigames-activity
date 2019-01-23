@@ -19,9 +19,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-from sugar.activity import activity
+from sugar3.activity import activity
 
-import gtk
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+from gi.repository import Gdk
 import pygtk
 pygtk.require("2.0")
 
@@ -34,7 +37,7 @@ from Archivos_y_Directorios import Archivos_y_Directorios
 
 #ICONOS = os.getcwd() + "/Iconos/"
 
-COLOR1 = gtk.gdk.Color(0,0,0,1)
+COLOR1 = Gdk.color_parse("black")
 
 DIRECTORIO_DATOS = os.path.join(activity.get_activity_root(), 'data/')
 DIRECTORIO_JUEGOS = os.getcwd()+"/Juegos/"
@@ -55,10 +58,10 @@ class JAMactivityFlash(activity.Activity):
 		barra_de_herramientas.set_Mibarra(JUEGOS, self.abrir_juego)
 
 		barra_de_herramientas.show()
-		self.set_toolbox(barra_de_herramientas)
+		#self.set_toolbox(barra_de_herramientas)
 
 		# Canvas
-		self.caja = gtk.HBox()
+		self.caja = Gtk.HBox()
 		self.set_canvas(self.caja)
 
 		archivo = DIRECTORIO_JUEGOS + "Ajedrez.swf"
@@ -81,12 +84,12 @@ class JAMactivityFlash(activity.Activity):
 		print "*** Abrir Juego ***", direccion_de_ejecucion
 		self.navegador.navegador.load_uri(direccion_de_ejecucion)
 
-class Mibarra(gtk.Toolbar):
+class Mibarra(Gtk.Toolbar):
 # Barra de Herramientas gtk # http://library.gnome.org/devel/pygtk/stable/class-gtktoolbar.html
 	
 	def __init__(self):
 
-		gtk.Toolbar.__init__(self)
+		Gtk.Toolbar.__init__(self)
 		self.show_all()
 
 	def set_Mibarra(self, juegos, callback):
@@ -98,9 +101,9 @@ class Mibarra(gtk.Toolbar):
 			direccion_de_ejecucion = DIRECTORIO_JUEGOS + juego
 			#callback = None
 
-			item = gtk.ToolItem()
-			boton = gtk.Button(juego.split(".")[0])
-			boton.modify_bg(gtk.STATE_NORMAL, COLOR1)
+			item = Gtk.ToolItem()
+			boton = Gtk.Button(juego.split(".")[0])
+			boton.modify_bg(Gtk.StateFlags.NORMAL, COLOR1)
 			item.add(boton)
 			boton.show()
 			item.show()
@@ -108,9 +111,9 @@ class Mibarra(gtk.Toolbar):
 			self.insert(item,-1)
 
 		# salir
-		item = gtk.ToolItem()
-		salir = gtk.Button("Salir")
-		salir.modify_bg(gtk.STATE_NORMAL, COLOR1)
+		item = Gtk.ToolItem()
+		salir = Gtk.Button("Salir")
+		salir.modify_bg(Gtk.StateFlags.NORMAL, COLOR1)
 		item.add(salir)
 		salir.show()
 		item.show()
